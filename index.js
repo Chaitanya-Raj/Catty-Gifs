@@ -8,23 +8,16 @@ searchButton.addEventListener("click", (e) => {
   search(input.value);
 });
 
-function search(val) {
+async function search(val) {
   let s = val ? val : null;
   console.log(s);
 
-  fetch(
+  const response = await fetch(
     `https://api.giphy.com/v1/gifs/translate?api_key=dLIz1H0BoK2GHHuzRNnTx2CPpUUl9XYk&s=${s}`,
     { mode: "cors" }
-  )
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (response) {
-      img.src = response.data.images.original.url;
-    })
-    .catch(function () {
-      alert("Error");
-    });
+  );
+  const data = await response.json();
+  img.src = data.data.images.original.url;
 }
 
 search();
